@@ -1,13 +1,13 @@
 package com.aveepb.flashcardapp.db.model;
 
-import com.aveepb.flashcardapp.db.constant.UserRole;
+import com.aveepb.flashcardapp.db.constant.WordType;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -15,25 +15,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
-@Table(name = "users")
+@Table(name = "words")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Word {
 
     @Id
     @GeneratedValue
     private Integer id;
-    private String username;
-    private String password;
+    private String englishMeaning;
+    private String polishMeaning;
 
     @Enumerated(value = EnumType.STRING)
-    private UserRole role;
+    private WordType type;
 
-    @OneToMany(mappedBy = "user")
-    private List<Collection> collectionList;
+    @ManyToOne
+    private Collection collection;
 }
