@@ -1,5 +1,5 @@
 package com.aveepb.flashcardapp.db.constant;
 
-public enum Role {
+public enum UserRole {
     ADMIN, USER,
 }
