@@ -1,5 +1,8 @@
 package com.aveepb.flashcardapp.app.auth;
 
+import com.aveepb.flashcardapp.app.ex.IncorrectUsernameOrPassword;
+import com.aveepb.flashcardapp.app.ex.UsernameAlreadyTaken;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -16,14 +19,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/log-in")
-    public ResponseEntity<AuthResponse> logIn(@RequestBody AuthRequest request) {
+    public ResponseEntity<AuthResponse> logIn(@RequestBody AuthRequest request) throws IncorrectUsernameOrPassword {
 
         String token = this.authService.logIn(request);
         return ResponseEntity.ok(new AuthResponse(token));
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<AuthResponse> signUp(@RequestBody AuthRequest request) {
+    public ResponseEntity<AuthResponse> signUp(@RequestBody AuthRequest request) throws UsernameAlreadyTaken {
 
         String token = this.authService.signUp(request);
         return ResponseEntity.ok(new AuthResponse(token));
