@@ -1,4 +1,4 @@
-package com.aveepb.flashcardapp.app.auth;
+package com.aveepb.flashcardapp.app.auth.conn;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
