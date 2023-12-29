@@ -9,10 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class FlashcardsService {
+public class CollectionService {
 
     private final CollectionRepository collectionRepository;
 
@@ -30,11 +31,11 @@ public class FlashcardsService {
      * Fetches the collection owned by the user.
      * @param collectionName the collection name.
      * @param user the user details.
-     * @return the collection object.
+     * @return the optional of collection.
      */
-    public Collection getCollection(String collectionName, User user) {
+    public Optional<Collection> getCollection(String collectionName, User user) {
 
-        return this.collectionRepository.findByNameAndUser(collectionName, user).get();
+        return this.collectionRepository.findByNameAndUser(collectionName, user);
     }
 
     /**

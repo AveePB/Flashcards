@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RemoveFlashCardRequest {
+public class RemoveFlashcardRequest {
 
     private String englishWord;
 }
