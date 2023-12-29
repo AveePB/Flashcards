@@ -1,0 +1,78 @@
+package com.aveepb.flashcardapp.app.flashcards;
+
+import com.aveepb.flashcardapp.db.model.Collection;
+import com.aveepb.flashcardapp.db.model.User;
+import com.aveepb.flashcardapp.db.repo.CollectionRepository;
+
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class FlashcardsService {
+
+    private final CollectionRepository collectionRepository;
+
+    /**
+     * Fetches all collections owned by the user.
+     * @param user the user details.
+     * @return the list of collections.
+     */
+    public List<Collection> getAllCollections(User user) {
+
+        return this.collectionRepository.findAllByUser(user);
+    }
+
+    /**
+     * Fetches the collection owned by the user.
+     * @param collectionName the collection name.
+     * @param user the user details.
+     * @return the collection object.
+     */
+    public Collection getCollection(String collectionName, User user) {
+
+        return this.collectionRepository.findByNameAndUser(collectionName, user).get();
+    }
+
+    /**
+     * Inserts a new collection into the database.
+     * @param collectionName the collection name.
+     * @param user the user details.
+     * @return true if the collection was created otherwise false.
+     */
+    public boolean createCollection(String collectionName, User user) {
+
+        //Check if the collection name is taken.
+        if (this.collectionRepository.findByNameAndUser(collectionName, user).isPresent())
+            return false;
+
+        Collection newCollection = Collection.builder()
+                .name(collectionName)
+                .user(user)
+                .build();
+
+        this.collectionRepository.save(newCollection);
+        return true;
+    }
+
+    /**
+     * Removes the object from the database.
+     * @param collectionName the collection name.
+     * @param user the user details.
+     * @return true if the collection was deleted otherwise false.
+     */
+    public boolean deleteCollectionByNameAndUser(String collectionName, User user) {
+
+        try {
+            this.collectionRepository.deleteByNameAndUser(collectionName, user);
+        }
+        catch (Exception ex){
+            return false;
+        }
+
+        return true;
+    }
+}
