@@ -1,4 +1,4 @@
-package com.aveepb.flashcardapp.app.auth.ex;
+package com.aveepb.flashcardapp.web.ex.auth;
 
 public class UsernameAlreadyTaken extends Exception {
 
