@@ -1,8 +1,8 @@
-package com.aveepb.flashcardapp.app.auth;
+package com.aveepb.flashcardapp.web.service.auth;
 
-import com.aveepb.flashcardapp.app.auth.conn.AuthRequest;
-import com.aveepb.flashcardapp.app.auth.ex.IncorrectUsernameOrPassword;
-import com.aveepb.flashcardapp.app.auth.ex.UsernameAlreadyTaken;
+import com.aveepb.flashcardapp.web.conn.auth.AuthRequest;
+import com.aveepb.flashcardapp.web.ex.auth.IncorrectUsernameOrPassword;
+import com.aveepb.flashcardapp.web.ex.auth.UsernameAlreadyTaken;
 import com.aveepb.flashcardapp.db.model.User;
 import com.aveepb.flashcardapp.db.repo.UserRepository;
 
@@ -25,10 +25,11 @@ public class AuthService {
      * @return the json web token.
      */
     public String logIn(AuthRequest request) throws IncorrectUsernameOrPassword {
-
+        //Prepare crucial variables.
         String encodedPassword = this.passwordEncoder.encode(request.getPassword());
         Optional<User> user = this.userRepository.findByUsernameAndPassword(request.getUsername(), encodedPassword);
 
+        //Check if user doesn't exist.
         if (user.isEmpty())
             throw new IncorrectUsernameOrPassword();
 
@@ -40,10 +41,11 @@ public class AuthService {
      * @return the json web token.
      */
     public String signUp(AuthRequest request) throws UsernameAlreadyTaken {
-
+        //Prepare crucial variables.
         String encodedPassword = this.passwordEncoder.encode(request.getPassword());
         Optional<User> user = this.userRepository.findByUsername(request.getUsername());
 
+        //Check if user exists.
         if (user.isPresent())
             throw new UsernameAlreadyTaken();
 
@@ -53,7 +55,6 @@ public class AuthService {
                 .build();
 
         this.userRepository.save(newUser);
-
         return "TOKEN";
     }
 }

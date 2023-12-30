@@ -1,6 +1,6 @@
 package com.aveepb.flashcardapp;
 
-import com.aveepb.flashcardapp.app.flashcards.CollectionService;
+import com.aveepb.flashcardapp.web.service.CollectionService;
 import com.aveepb.flashcardapp.db.constant.UserRole;
 import com.aveepb.flashcardapp.db.model.Collection;
 import com.aveepb.flashcardapp.db.model.User;
@@ -28,7 +28,7 @@ class CollectionServiceTests {
 	@Autowired
 	private final UserRepository userRepository = null;
 
-	//Services:
+	//Service:
 	@Autowired
 	private final CollectionService collectionService = null;
 
@@ -36,10 +36,8 @@ class CollectionServiceTests {
 	@Autowired
 	private final PasswordEncoder passwordEncoder = null;
 
-
 	@Test
-	void shouldReturnAllCollectionsOwnedByUser() {
-
+	void shouldReturnAllFlashcardsCollectionsOwnedByUser() {
 		//Create user.
 		User userStas = new User(null, "Stas", this.passwordEncoder.encode(""), UserRole.USER, null);
 		userStas = this.userRepository.save(userStas);
@@ -57,8 +55,7 @@ class CollectionServiceTests {
 	}
 
 	@Test
-	void shouldNotReturnCollectionsOwnedByTheOtherUser() {
-
+	void shouldNotReturnFlashcardsCollectionsOwnedByTheOtherUser() {
 		//Create users.
 		User userStas = new User(null, "Stas", this.passwordEncoder.encode(""), UserRole.USER, null);
 		User userAdam = new User(null, "Adam", this.passwordEncoder.encode(""), UserRole.USER, null);
@@ -85,7 +82,6 @@ class CollectionServiceTests {
 
 	@Test
 	void shouldReturnFlashcardsCollection() {
-
 		//Create user.
 		User userJohn = new User(null, "John", this.passwordEncoder.encode(""), UserRole.USER, null);
 		userJohn = this.userRepository.save(userJohn);
@@ -100,7 +96,6 @@ class CollectionServiceTests {
 
 	@Test
 	void shouldCreateFlashcardsCollection() {
-
 		//Create user.
 		User userJohn = new User(null, "John", this.passwordEncoder.encode(""), UserRole.USER, null);
 		userJohn = this.userRepository.save(userJohn);
@@ -114,8 +109,7 @@ class CollectionServiceTests {
 	}
 
 	@Test
-	void shouldNotCreateFlashCardsCollectionWithTakenName() {
-
+	void shouldNotCreateFlashcardsCollectionWithTakenName() {
 		//Create user.
 		User userXavier = new User(null, "Xavier", this.passwordEncoder.encode(""), UserRole.USER, null);
 		userXavier = this.userRepository.save(userXavier);
@@ -130,4 +124,34 @@ class CollectionServiceTests {
 		assertThat(xavierCollectionList.size()).isEqualTo(2);
 	}
 
+	@Test
+	void shouldDeleteFlashcardsCollection() {
+		//Create user.
+		User userXavier = new User(null, "Xavier", this.passwordEncoder.encode(""), UserRole.USER, null);
+		userXavier = this.userRepository.save(userXavier);
+
+		//Create collections owned by the users.
+		this.collectionService.createCollection("Players", userXavier);
+
+		//Delete collection.
+		this.collectionService.deleteCollection("Players", userXavier);
+
+		//Get collection.
+		assertThat(this.collectionService.getCollection("Players", userXavier).isPresent()).isEqualTo(false);
+	}
+
+	@Test
+	void shouldNotDeleteFlashcardsCollectionThatDoesNotExist() {
+		//Create user.
+		User userXavier = new User(null, "Xavier", this.passwordEncoder.encode(""), UserRole.USER, null);
+		userXavier = this.userRepository.save(userXavier);
+
+		//Create collections owned by the users.
+		this.collectionService.createCollection("Players", userXavier);
+
+		//Delete collection.
+		boolean isDeleted = this.collectionService.deleteCollection("Play3rs", userXavier);
+
+		assertThat(isDeleted).isEqualTo(false);
+	}
 }
