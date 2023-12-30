@@ -1,9 +1,10 @@
-package com.aveepb.flashcardapp.app.auth;
+package com.aveepb.flashcardapp.web.controller;
 
-import com.aveepb.flashcardapp.app.auth.conn.AuthRequest;
-import com.aveepb.flashcardapp.app.auth.conn.AuthResponse;
-import com.aveepb.flashcardapp.app.auth.ex.IncorrectUsernameOrPassword;
-import com.aveepb.flashcardapp.app.auth.ex.UsernameAlreadyTaken;
+import com.aveepb.flashcardapp.web.service.AuthService;
+import com.aveepb.flashcardapp.web.conn.auth.AuthRequest;
+import com.aveepb.flashcardapp.web.conn.auth.AuthResponse;
+import com.aveepb.flashcardapp.web.ex.auth.IncorrectUsernameOrPassword;
+import com.aveepb.flashcardapp.web.ex.auth.UsernameAlreadyTaken;
 
 import lombok.RequiredArgsConstructor;
 

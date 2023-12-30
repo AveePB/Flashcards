@@ -1,4 +1,7 @@
-package com.aveepb.flashcardapp.app.flashcards;
+package com.aveepb.flashcardapp.web.controller;
+
+import com.aveepb.flashcardapp.web.conn.flashcards.AddFlashcardRequest;
+import com.aveepb.flashcardapp.web.conn.flashcards.RemoveFlashcardRequest;
 
 import lombok.RequiredArgsConstructor;
 
