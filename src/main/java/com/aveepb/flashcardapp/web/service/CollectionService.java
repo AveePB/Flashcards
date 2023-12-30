@@ -1,4 +1,4 @@
-package com.aveepb.flashcardapp.web.service.flashcards;
+package com.aveepb.flashcardapp.web.service;
 
 import com.aveepb.flashcardapp.db.model.Collection;
 import com.aveepb.flashcardapp.db.model.User;
@@ -45,7 +45,6 @@ public class CollectionService {
      * @return true if the collection was created otherwise false.
      */
     public boolean createCollection(String collectionName, User user) {
-
         //Check if the collection name is taken.
         if (this.collectionRepository.findByNameAndUser(collectionName, user).isPresent())
             return false;
@@ -65,7 +64,7 @@ public class CollectionService {
      * @param user the user details.
      * @return true if the collection was deleted otherwise false.
      */
-    public boolean deleteCollectionByNameAndUser(String collectionName, User user) {
+    public boolean deleteCollection(String collectionName, User user) {
 
         Optional<Collection> collectionOptional = getCollection(collectionName, user);
 

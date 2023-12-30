@@ -1,4 +1,4 @@
-package com.aveepb.flashcardapp.web.service.auth;
+package com.aveepb.flashcardapp.web.service;
 
 import com.aveepb.flashcardapp.web.conn.auth.AuthRequest;
 import com.aveepb.flashcardapp.web.ex.auth.IncorrectUsernameOrPassword;
