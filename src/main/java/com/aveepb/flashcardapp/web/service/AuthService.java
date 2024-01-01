@@ -1,6 +1,6 @@
 package com.aveepb.flashcardapp.web.service;
 
-import com.aveepb.flashcardapp.web.conn.auth.AuthRequest;
+import com.aveepb.flashcardapp.web.conn.auth.request.AuthRequest;
 import com.aveepb.flashcardapp.web.ex.auth.IncorrectUsernameOrPassword;
 import com.aveepb.flashcardapp.web.ex.auth.UsernameAlreadyTaken;
 import com.aveepb.flashcardapp.db.model.User;

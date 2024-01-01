@@ -1,4 +1,4 @@
-package com.aveepb.flashcardapp;
+package com.aveepb.flashcardapp.service;
 
 import com.aveepb.flashcardapp.web.service.CollectionService;
 import com.aveepb.flashcardapp.db.constant.UserRole;

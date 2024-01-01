@@ -1,13 +1,18 @@
 package com.aveepb.flashcardapp.web.controller;
 
-import com.aveepb.flashcardapp.web.conn.flashcards.AddFlashcardRequest;
-import com.aveepb.flashcardapp.web.conn.flashcards.RemoveFlashcardRequest;
+import com.aveepb.flashcardapp.web.conn.flashcards.request.AddFlashcardRequest;
+import com.aveepb.flashcardapp.web.conn.flashcards.request.RemoveFlashcardRequest;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/flashcards")
@@ -16,7 +21,6 @@ public class FlashcardsController {
 
     @GetMapping("/{username}")
     public ResponseEntity<String> fetchFlashcardsCollections(@PathVariable String username) {
-
 
         return ResponseEntity.ok("ENDPOINT: fetchFlashCardsCollections");
     }
@@ -44,7 +48,6 @@ public class FlashcardsController {
 
     @GetMapping("/{username}/{collectionName}/random")
     public ResponseEntity<String> fetchRandomFlashcard(@PathVariable String username, @PathVariable String collectionName) {
-
 
         return ResponseEntity.ok("ENDPOINT: fetchRandomFlashCard");
     }

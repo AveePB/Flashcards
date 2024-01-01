@@ -1,4 +1,4 @@
-package com.aveepb.flashcardapp;
+package com.aveepb.flashcardapp.service;
 
 import com.aveepb.flashcardapp.db.constant.UserRole;
 import com.aveepb.flashcardapp.db.constant.WordType;

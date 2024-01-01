@@ -1,4 +1,4 @@
-package com.aveepb.flashcardapp.web.conn.flashcards;
+package com.aveepb.flashcardapp.web.conn.flashcards.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

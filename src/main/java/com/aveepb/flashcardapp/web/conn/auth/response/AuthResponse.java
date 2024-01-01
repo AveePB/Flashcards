@@ -1,4 +1,4 @@
-package com.aveepb.flashcardapp.web.conn.flashcards;
+package com.aveepb.flashcardapp.web.conn.auth.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddFlashcardRequest {
+public class AuthResponse {
 
-    private String englishWord;
-    private String polishWord;
+    private String bearerToken;
 }
