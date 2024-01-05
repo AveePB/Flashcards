@@ -8,6 +8,7 @@ import com.aveepb.flashcardapp.web.ex.auth.UsernameAlreadyTaken;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,16 +23,28 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/log-in")
-    public ResponseEntity<AuthResponse> logIn(@RequestBody AuthRequest request) throws IncorrectUsernameOrPassword {
+    public ResponseEntity<AuthResponse> logIn(@RequestBody AuthRequest request) {
 
-        String token = this.authService.logIn(request);
-        return ResponseEntity.ok(new AuthResponse(token));
+        try {
+            String token = this.authService.logIn(request);
+            return ResponseEntity.ok(new AuthResponse(token));
+        }
+        catch (IncorrectUsernameOrPassword ex) {
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<AuthResponse> signUp(@RequestBody AuthRequest request) throws UsernameAlreadyTaken {
+    public ResponseEntity<AuthResponse> signUp(@RequestBody AuthRequest request) {
 
-        String token = this.authService.signUp(request);
-        return ResponseEntity.ok(new AuthResponse(token));
+        try {
+            String token = this.authService.signUp(request);
+            return ResponseEntity.ok(new AuthResponse(token));
+        }
+        catch (UsernameAlreadyTaken ex) {
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 }
