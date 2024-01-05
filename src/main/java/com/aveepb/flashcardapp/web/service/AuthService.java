@@ -1,5 +1,6 @@
 package com.aveepb.flashcardapp.web.service;
 
+import com.aveepb.flashcardapp.db.constant.UserRole;
 import com.aveepb.flashcardapp.web.conn.auth.request.AuthRequest;
 import com.aveepb.flashcardapp.web.ex.auth.IncorrectUsernameOrPassword;
 import com.aveepb.flashcardapp.web.ex.auth.UsernameAlreadyTaken;
@@ -8,6 +9,8 @@ import com.aveepb.flashcardapp.db.repo.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthService {
 
+    private final AuthenticationManager authManager;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
@@ -25,9 +29,8 @@ public class AuthService {
      * @return the json web token.
      */
     public String logIn(AuthRequest request) throws IncorrectUsernameOrPassword {
-        //Prepare crucial variables.
-        String encodedPassword = this.passwordEncoder.encode(request.getPassword());
-        Optional<User> user = this.userRepository.findByUsernameAndPassword(request.getUsername(), encodedPassword);
+        this.authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        Optional<User> user = this.userRepository.findByUsername(request.getUsername());
 
         //Check if user doesn't exist.
         if (user.isEmpty())
@@ -52,6 +55,7 @@ public class AuthService {
         User newUser = User.builder()
                 .username(request.getUsername())
                 .password(encodedPassword)
+                .role(UserRole.USER)
                 .build();
 
         this.userRepository.save(newUser);
