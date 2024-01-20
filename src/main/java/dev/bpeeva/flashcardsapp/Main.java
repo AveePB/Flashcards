@@ -1,4 +1,4 @@
-package com.aveepb.flashcardapp;
+package dev.bpeeva.flashcardsapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
