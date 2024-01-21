@@ -5,10 +5,12 @@ import dev.bpeeva.flashcardsapp.db.model.Flashcard;
 import dev.bpeeva.flashcardsapp.db.model.FlashcardCollection;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface FlashcardRepository extends JpaRepository<Flashcard, Integer> {
 
     Optional<Flashcard> findByWordTypeAndEnglishWordAndFlashcardCollection(WordType wordType, String englishWord, FlashcardCollection flashcardCollection);
