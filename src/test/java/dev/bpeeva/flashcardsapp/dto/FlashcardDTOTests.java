@@ -43,5 +43,4 @@ public class FlashcardDTOTests {
         //Check if null.
         assertThat(flashcardDTO.isEmpty()).isEqualTo(true);
     }
-
 }
