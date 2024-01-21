@@ -10,18 +10,17 @@ public class FlashcardDTOMapper implements Function<Flashcard, Optional<Flashcar
 
     @Override
     public Optional<FlashcardDTO> apply(Flashcard flashcard) {
-        //Check if not null.
-        if (flashcard.getWordType() == null ||
-                flashcard.getEnglishWord() == null ||
-                flashcard.getPolishWord() == null)
-            return Optional.empty();
+        //Create data transfer object.
+        FlashcardDTO flashcardDTO = new FlashcardDTO(
+                flashcard.getWordType(),
+                flashcard.getEnglishWord(),
+                flashcard.getPolishWord()
+        );
 
-        //Create new object.
-        return Optional.of(
-                new FlashcardDTO(
-                        flashcard.getWordType(),
-                        flashcard.getEnglishWord(),
-                        flashcard.getPolishWord()
-                ));
+        //Check if not null.
+        if (flashcardDTO.isNotNull())
+            return Optional.of(flashcardDTO);
+
+        return Optional.empty();
     }
 }
