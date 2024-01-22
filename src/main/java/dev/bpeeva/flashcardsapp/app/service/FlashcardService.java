@@ -77,11 +77,8 @@ public class FlashcardService {
     public void deleteFlashcard(FlashcardCollection flashcardCollection, FlashcardDTO flashcardDTO) {
         //Check if not null.
         if (flashcardDTO.isNotNull() && flashcardCollection != null) {
-            //Create flashcard object.
-            Flashcard flashcard = new Flashcard(null, flashcardDTO.wordType(), flashcardDTO.englishWord(), flashcardDTO.polishWord(), flashcardCollection);
-
             //Delete the flashcard.
-            this.flashcardRepository.delete(flashcard);
+            this.flashcardRepository.deleteByWordTypeAndEnglishWordAndFlashcardCollection(flashcardDTO.wordType(), flashcardDTO.englishWord(), flashcardCollection);
         }
     }
 }
