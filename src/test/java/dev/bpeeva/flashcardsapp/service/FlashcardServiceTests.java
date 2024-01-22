@@ -10,6 +10,8 @@ import dev.bpeeva.flashcardsapp.db.repo.FlashcardCollectionRepository;
 import dev.bpeeva.flashcardsapp.db.repo.FlashcardRepository;
 import dev.bpeeva.flashcardsapp.db.repo.UserRepository;
 
+import dev.bpeeva.flashcardsapp.util.dto.FlashcardDTO;
+import dev.bpeeva.flashcardsapp.util.mapper.FlashcardDTOMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,7 +44,7 @@ public class FlashcardServiceTests {
     void setUp() {
         //Create required objects.
         this.user = new User(null, UserRole.USER, "Alex", "", null);
-        this.flashcardCollection = new FlashcardCollection(null, "Animals", null, this.user);
+        this.flashcardCollection = new FlashcardCollection(null, "Random Words", null, this.user);
 
         //Save to repos.
         this.userRepository.save(this.user);
@@ -70,5 +73,125 @@ public class FlashcardServiceTests {
         //Check list sizes.
         assertThat(flashcardList.size()).isEqualTo(0);
         assertThat(flashcardList2.size()).isEqualTo(0);
+    }
+
+    @Test
+    void shouldReturnARandomFlashcard() {
+        //Save flashcard to repo.
+        this.flashcardRepository.save(new Flashcard(null, WordType.VERB, "Go", "Isc", this.flashcardCollection));
+
+        //Fetch random flashcard.
+        Optional<Flashcard> flashcard = this.flashcardService.getRandomFlashcard(this.flashcardCollection);
+
+        //Check if present.
+        assertThat(flashcard.isPresent()).isTrue();
+    }
+
+    @Test
+    void shouldNotReturnARandomFlashcard() {
+        //Fetch random flashcard.
+        Optional<Flashcard> flashcard = this.flashcardService.getRandomFlashcard(this.flashcardCollection);
+
+        //Check if null.
+        assertThat(flashcard.isEmpty()).isTrue();
+    }
+
+    @Test
+    void shouldInsertANewFlashcardIntoTheCollection() {
+        //Create flashcard DTO.
+        FlashcardDTO flashcardDTO = new FlashcardDTO(WordType.VERB, "Kick", "Kopnac");
+
+        //Update collection.
+        this.flashcardService.createFlashcard(this.flashcardCollection, flashcardDTO);
+
+        //Find collection size.
+        int collectionSize = this.flashcardRepository.findAllByFlashcardCollection(this.flashcardCollection).size();
+
+        //Check collection size.
+        assertThat(collectionSize).isEqualTo(1);
+    }
+
+    @Test
+    void shouldNotInsertAFlashcardWithNoCollection() {
+        //Create flashcard DTO.
+        FlashcardDTO flashcardDTO = new FlashcardDTO(WordType.VERB, "Kick", "Kopnac");
+
+        //Update collection.
+        this.flashcardService.createFlashcard(null, flashcardDTO);
+
+        //Find collection size.
+        int collectionSize = this.flashcardRepository.findAllByFlashcardCollection(this.flashcardCollection).size();
+
+        //Check collection size.
+        assertThat(collectionSize).isEqualTo(0);
+    }
+
+    @Test
+    void shouldNotInsertAFlashcardWithLackingParameters() {
+        //Create flashcard DTO.
+        FlashcardDTO flashcardDTO = new FlashcardDTO(null, null, null);
+
+        //Update collection.
+        this.flashcardService.createFlashcard(this.flashcardCollection, flashcardDTO);
+
+        //Find collection size.
+        int collectionSize = this.flashcardRepository.findAllByFlashcardCollection(this.flashcardCollection).size();
+
+        //Check collection size.
+        assertThat(collectionSize).isEqualTo(0);
+    }
+
+    @Test
+    void shouldDeleteAFlashcardFromTheCollection() {
+        //Create flashcard.
+        Flashcard flashcard = new Flashcard(null, WordType.VERB, "Eat", "Jesc", this.flashcardCollection);
+
+        //Save flashcard to repo.
+        this.flashcardRepository.save(flashcard);
+
+        //Create flashcard DTO.
+        Optional<FlashcardDTO> flashcardDTO = new FlashcardDTOMapper().apply(flashcard);
+
+        //Delete flashcard.
+        this.flashcardService.deleteFlashcard(this.flashcardCollection, flashcardDTO.get());
+
+        //Check collection size.
+        int collectionSize = this.flashcardRepository.findAllByFlashcardCollection(this.flashcardCollection).size();
+        assertThat(collectionSize).isEqualTo(0);
+    }
+
+    @Test
+    void shouldNotDeleteAFlashcardWithNoCollection() {
+        //Create flashcard.
+        Flashcard flashcard = new Flashcard(null, WordType.VERB, "Eat", "Jesc", this.flashcardCollection);
+
+        //Save flashcard to repo.
+        this.flashcardRepository.save(flashcard);
+
+        //Create flashcard DTO.
+        Optional<FlashcardDTO> flashcardDTO = new FlashcardDTOMapper().apply(flashcard);
+
+        //Delete flashcard.
+        this.flashcardService.deleteFlashcard(null, flashcardDTO.get());
+
+        //Check collection size.
+        int collectionSize = this.flashcardRepository.findAllByFlashcardCollection(this.flashcardCollection).size();
+        assertThat(collectionSize).isEqualTo(1);
+    }
+
+    @Test
+    void shouldNotDeleteAFlashcardWithLackingParameters() {
+        //Create flashcard.
+        Flashcard flashcard = new Flashcard(null, WordType.VERB, "Eat", "Jesc", this.flashcardCollection);
+
+        //Save flashcard to repo.
+        this.flashcardRepository.save(flashcard);
+
+        //Delete flashcard.
+        this.flashcardService.deleteFlashcard(this.flashcardCollection, new FlashcardDTO(null, null, null));
+
+        //Check collection size.
+        int collectionSize = this.flashcardRepository.findAllByFlashcardCollection(this.flashcardCollection).size();
+        assertThat(collectionSize).isEqualTo(1);
     }
 }
