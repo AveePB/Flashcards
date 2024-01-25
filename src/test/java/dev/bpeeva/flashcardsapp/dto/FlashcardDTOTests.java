@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FlashcardDTOTests {
 
     @Test
-    void shouldCreateFlashcardDTO() {
+    void shouldCreateAFlashcardDTO() {
         //Create objects.
         Flashcard flashcard = new Flashcard(null, WordType.VERB, "cook", "gotowac", null);
         Optional<FlashcardDTO> flashcardDTO = new FlashcardDTOMapper().apply(flashcard);
@@ -35,7 +35,7 @@ public class FlashcardDTOTests {
     }
 
     @Test
-    void shouldNotCreateFlashcardDTO() {
+    void shouldNotCreateAFlashcardDTO() {
         //Create objects.
         Flashcard flashcard = new Flashcard(null, null, null, null, null);
         Optional<FlashcardDTO> flashcardDTO = new FlashcardDTOMapper().apply(flashcard);
