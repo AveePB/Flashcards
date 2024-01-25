@@ -35,7 +35,7 @@ public class UserDTOTests {
     }
 
     @Test
-    void shouldNotCreateAUserDTO() {
+    void shouldNotCreateAUserDTOWithLackingParameters() {
         //Create objects.
         User user = new User(null, null, null, null, null);
         Optional<UserDTO> userDTO = new UserDTOMapper().apply(user);
