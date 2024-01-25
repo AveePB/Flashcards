@@ -35,7 +35,7 @@ public class FlashcardDTOTests {
     }
 
     @Test
-    void shouldNotCreateAFlashcardDTO() {
+    void shouldNotCreateAFlashcardDTOWithLackingParameters() {
         //Create objects.
         Flashcard flashcard = new Flashcard(null, null, null, null, null);
         Optional<FlashcardDTO> flashcardDTO = new FlashcardDTOMapper().apply(flashcard);
