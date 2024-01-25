@@ -9,9 +9,9 @@ import dev.bpeeva.flashcardsapp.db.model.User;
 import dev.bpeeva.flashcardsapp.db.repo.FlashcardCollectionRepository;
 import dev.bpeeva.flashcardsapp.db.repo.FlashcardRepository;
 import dev.bpeeva.flashcardsapp.db.repo.UserRepository;
-
 import dev.bpeeva.flashcardsapp.util.dto.FlashcardDTO;
 import dev.bpeeva.flashcardsapp.util.mapper.FlashcardDTOMapper;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -65,7 +65,7 @@ public class FlashcardServiceTests {
     }
 
     @Test
-    void shouldNotReturnAnyFlashcardsFromTheCollection() {
+    void shouldNotReturnAnAnyFlashcardsFromTheCollection() {
         //Fetch flashcards.
         List<Flashcard> flashcardList = this.flashcardService.getFlashcards(this.flashcardCollection);
         List<Flashcard> flashcardList2 = this.flashcardService.getFlashcards(null);
