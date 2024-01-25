@@ -61,9 +61,7 @@ public class FlashcardService {
             Flashcard flashcard = new Flashcard(null, flashcardDTO.wordType(), flashcardDTO.englishWord(), flashcardDTO.polishWord(), flashcardCollection);
 
             //Save flashcard.
-            this.flashcardRepository.save(flashcard);
-
-            return Optional.of(flashcard);
+            return Optional.of(this.flashcardRepository.save(flashcard));
         }
 
         return Optional.empty();
@@ -77,7 +75,7 @@ public class FlashcardService {
     public void deleteFlashcard(FlashcardCollection flashcardCollection, FlashcardDTO flashcardDTO) {
         //Check if not null.
         if (flashcardDTO.isNotNull() && flashcardCollection != null) {
-            //Delete the flashcard.
+            //Delete flashcard.
             this.flashcardRepository.deleteByWordTypeAndEnglishWordAndFlashcardCollection(flashcardDTO.wordType(), flashcardDTO.englishWord(), flashcardCollection);
         }
     }
