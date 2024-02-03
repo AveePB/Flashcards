@@ -1,4 +1,4 @@
-package dev.bpeeva.flashcardsapp.app.service;
+package dev.bpeeva.flashcardsapp.app.service.model;
 
 import dev.bpeeva.flashcardsapp.db.model.FlashcardCollection;
 import dev.bpeeva.flashcardsapp.db.model.User;

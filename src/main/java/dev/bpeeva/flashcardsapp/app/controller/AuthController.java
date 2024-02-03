@@ -1,6 +1,6 @@
 package dev.bpeeva.flashcardsapp.app.controller;
 
-import dev.bpeeva.flashcardsapp.app.service.UserService;
+import dev.bpeeva.flashcardsapp.app.service.model.UserService;
 import dev.bpeeva.flashcardsapp.db.model.User;
 import dev.bpeeva.flashcardsapp.security.JwtToken;
 import dev.bpeeva.flashcardsapp.util.dto.UserDTO;

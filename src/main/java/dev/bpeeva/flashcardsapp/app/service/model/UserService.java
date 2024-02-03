@@ -1,4 +1,4 @@
-package dev.bpeeva.flashcardsapp.app.service;
+package dev.bpeeva.flashcardsapp.app.service.model;
 
 import dev.bpeeva.flashcardsapp.db.model.User;
 import dev.bpeeva.flashcardsapp.db.repo.UserRepository;
@@ -37,6 +37,16 @@ public class UserService implements UserDetailsService {
     public Optional<User> getUser(UserDTO userDTO) {
 
         return this.userRepository.findByUsernameAndPassword(userDTO.username(), userDTO.password());
+    }
+
+    /**
+     * Fetches the user based on a username
+     * @param username the username.
+     * @return the optional object.
+     */
+    public Optional<User> getUser(String username) {
+
+        return this.userRepository.findByUsername(username);
     }
 
     /**

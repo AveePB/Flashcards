@@ -1,6 +1,6 @@
-package dev.bpeeva.flashcardsapp.service;
+package dev.bpeeva.flashcardsapp.service.model;
 
-import dev.bpeeva.flashcardsapp.app.service.FlashcardCollectionService;
+import dev.bpeeva.flashcardsapp.app.service.model.FlashcardCollectionService;
 import dev.bpeeva.flashcardsapp.db.constant.UserRole;
 import dev.bpeeva.flashcardsapp.db.model.FlashcardCollection;
 import dev.bpeeva.flashcardsapp.db.model.User;

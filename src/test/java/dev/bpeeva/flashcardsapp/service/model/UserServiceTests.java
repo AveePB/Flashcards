@@ -1,6 +1,6 @@
-package dev.bpeeva.flashcardsapp.service;
+package dev.bpeeva.flashcardsapp.service.model;
 
-import dev.bpeeva.flashcardsapp.app.service.UserService;
+import dev.bpeeva.flashcardsapp.app.service.model.UserService;
 import dev.bpeeva.flashcardsapp.db.constant.UserRole;
 import dev.bpeeva.flashcardsapp.db.model.User;
 import dev.bpeeva.flashcardsapp.db.repo.UserRepository;
@@ -88,6 +88,34 @@ public class UserServiceTests {
         //Check if empty.
         assertThat(user.isEmpty()).isEqualTo(true);
     }
+
+    @Test
+    void shouldReturnAUserBasingOnUsername() {
+        //Fetch user.
+        Optional<User> user = this.userService.getUser(this.user.getUsername());
+
+        //Check if present.
+        assertThat(user.isPresent()).isEqualTo(true);
+
+        //Check USER ROLE.
+        assertThat(user.get().getUserRole()).isEqualTo(this.user.getUserRole());
+
+        //Check USERNAME.
+        assertThat(user.get().getUsername()).isEqualTo(this.user.getUsername());
+
+        //Check PASSWORD.
+        assertThat(user.get().getPassword()).isEqualTo(this.user.getPassword());
+    }
+
+    @Test
+    void shouldNotReturnAUserBasingOnUsername() {
+        //Fetch user.
+        Optional<User> user = this.userService.getUser("random name");
+
+        //Check if empty.
+        assertThat(user.isEmpty()).isEqualTo(true);
+    }
+
 
     @Test
     void shouldCreateANewUser() {
