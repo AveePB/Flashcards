@@ -7,11 +7,14 @@ import dev.bpeeva.flashcardsapp.db.model.Flashcard;
 import dev.bpeeva.flashcardsapp.db.model.FlashcardCollection;
 import dev.bpeeva.flashcardsapp.db.model.User;
 import dev.bpeeva.flashcardsapp.util.dto.FlashcardDTO;
+import dev.bpeeva.flashcardsapp.util.mapper.FlashcardDTOMapper;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -74,5 +77,60 @@ public class FlashcardCTService {
         int sizeAfterDeletion = this.flashcardService.getFlashcards(flashcardCollection.get()).size();
 
         return (sizeBeforeDeletion != sizeAfterDeletion);
+    }
+
+    /**
+     * Chooses a random flashcard from the collection.
+     * @param username the name of a collection owner.
+     * @param collectionName the flashcard collection name.
+     * @return the optional object.
+     */
+    public Optional<FlashcardDTO> getRandomFlashcard(String username, String collectionName) {
+        //Fetch user object.
+        Optional<User> user = this.userService.getUser(username);
+
+        //Fetch flashcard collection object.
+        Optional<FlashcardCollection> flashcardCollection = this.flashcardCollectionService.getFlashcardCollection(user.get(), collectionName);
+
+        //Collection isn't present.
+        if (flashcardCollection.isEmpty())
+            return Optional.empty();
+
+        //Fetch random flashcard.
+        Optional<Flashcard> flashcard = this.flashcardService.getRandomFlashcard(flashcardCollection.get());
+
+        //Flashcard isn't present.
+        if (flashcard.isEmpty())
+            return Optional.empty();
+
+        return new FlashcardDTOMapper().apply(flashcard.get());
+    }
+
+    /**
+     * Fetches all flashcards from the collection.
+     * @param username the name of a collection owner.
+     * @param collectionName the flashcard collection name.
+     * @return the list object.
+     */
+    public List<FlashcardDTO> getAllFlashcards(String username, String collectionName) {
+        //Fetch user object.
+        Optional<User> user = this.userService.getUser(username);
+
+        //Fetch flashcard collection object.
+        Optional<FlashcardCollection> flashcardCollection = this.flashcardCollectionService.getFlashcardCollection(user.get(), collectionName);
+
+        //Collection isn't present.
+        if (flashcardCollection.isEmpty())
+            return new ArrayList<>();
+
+        //Fetch flashcards.
+        List<Flashcard> flashcards = this.flashcardService.getFlashcards(flashcardCollection.get());
+
+        //Convert to flashcard dto.
+        return flashcards.stream()
+                .map(new FlashcardDTOMapper())
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
     }
 }
