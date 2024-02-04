@@ -36,6 +36,10 @@ public class FlashcardCTService {
         //Fetch user object.
         Optional<User> user = this.userService.getUser(username);
 
+        //User isn't present.
+        if (user.isEmpty())
+            return false;
+
         //Fetch flashcard collection object.
         Optional<FlashcardCollection> flashcardCollection = this.flashcardCollectionService.getFlashcardCollection(user.get(), collectionName);
 
@@ -59,6 +63,10 @@ public class FlashcardCTService {
     public boolean deleteFlashcard(String username, String collectionName, FlashcardDTO flashcardDTO) {
         //Fetch user object.
         Optional<User> user = this.userService.getUser(username);
+
+        //User isn't present.
+        if (user.isEmpty())
+            return false;
 
         //Fetch flashcard collection object.
         Optional<FlashcardCollection> flashcardCollection = this.flashcardCollectionService.getFlashcardCollection(user.get(), collectionName);
@@ -89,6 +97,10 @@ public class FlashcardCTService {
         //Fetch user object.
         Optional<User> user = this.userService.getUser(username);
 
+        //User isn't present.
+        if (user.isEmpty())
+            return Optional.empty();
+
         //Fetch flashcard collection object.
         Optional<FlashcardCollection> flashcardCollection = this.flashcardCollectionService.getFlashcardCollection(user.get(), collectionName);
 
@@ -115,6 +127,10 @@ public class FlashcardCTService {
     public List<FlashcardDTO> getAllFlashcards(String username, String collectionName) {
         //Fetch user object.
         Optional<User> user = this.userService.getUser(username);
+
+        //User isn't present.
+        if (user.isEmpty())
+            return new ArrayList<>();
 
         //Fetch flashcard collection object.
         Optional<FlashcardCollection> flashcardCollection = this.flashcardCollectionService.getFlashcardCollection(user.get(), collectionName);
