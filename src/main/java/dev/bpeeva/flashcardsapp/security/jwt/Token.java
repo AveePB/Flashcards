@@ -48,6 +48,10 @@ public class Token {
      * @return boolean value.
      */
     public boolean isExpired(Key key) {
+        //Check bearer token.
+        if (this.bearerToken == null || this.bearerToken.equals(""))
+            return false;
+
         try {
             //Extract expiration date.
             Optional<Date> expirationDate = TokenClaims.extractExpirationDate(this.bearerToken, key);
