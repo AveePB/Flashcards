@@ -1,7 +1,7 @@
 package dev.bpeeva.flashcardsapp.controller;
 
 import dev.bpeeva.flashcardsapp.db.constant.UserRole;
-import dev.bpeeva.flashcardsapp.security.JwtToken;
+import dev.bpeeva.flashcardsapp.security.jwt.Token;
 import dev.bpeeva.flashcardsapp.util.dto.UserDTO;
 
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class AuthControllerTests {
     @Test
     void shouldCreateANewUser() {
         //Apply request.
-        ResponseEntity<JwtToken> response = this.restTemplate.postForEntity("/auth/signup", new UserDTO(UserRole.USER, "Jackie Chan 231", ""), JwtToken.class);
+        ResponseEntity<Token> response = this.restTemplate.postForEntity("/auth/signup", new UserDTO(UserRole.USER, "Jackie Chan 231", ""), Token.class);
 
         //Check STATUS CODE.
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -37,8 +37,8 @@ public class AuthControllerTests {
     @Test
     void shouldNotCreateANewUserWithTakenName() {
         //Apply requests.
-        this.restTemplate.postForEntity("/auth/signup", new UserDTO(UserRole.USER, "Jackie Chan 231", ""), JwtToken.class);
-        ResponseEntity<JwtToken> response = this.restTemplate.postForEntity("/auth/signup", new UserDTO(UserRole.USER, "Jackie Chan 231", ""), JwtToken.class);
+        this.restTemplate.postForEntity("/auth/signup", new UserDTO(UserRole.USER, "Jackie Chan 231", ""), Token.class);
+        ResponseEntity<Token> response = this.restTemplate.postForEntity("/auth/signup", new UserDTO(UserRole.USER, "Jackie Chan 231", ""), Token.class);
 
         //Check STATUS CODE.
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
@@ -47,8 +47,8 @@ public class AuthControllerTests {
     @Test
     void shouldSuccessfullyVerifyAUser() {
         //Apply requests.
-        this.restTemplate.postForEntity("/auth/signup", new UserDTO(UserRole.USER, "Youkemas", ""), JwtToken.class);
-        ResponseEntity<JwtToken> response = this.restTemplate.postForEntity("/auth/login", new UserDTO(UserRole.USER, "Youkemas", ""), JwtToken.class);
+        this.restTemplate.postForEntity("/auth/signup", new UserDTO(UserRole.USER, "Youkemas", ""), Token.class);
+        ResponseEntity<Token> response = this.restTemplate.postForEntity("/auth/login", new UserDTO(UserRole.USER, "Youkemas", ""), Token.class);
 
         //Check STATUS CODE.
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -60,7 +60,7 @@ public class AuthControllerTests {
     @Test
     void shouldNotSuccessfullyVerifyAUser() {
         //Apply requests.
-        ResponseEntity<JwtToken> response = this.restTemplate.postForEntity("/auth/login", new UserDTO(UserRole.USER, "SomeUserName", ""), JwtToken.class);
+        ResponseEntity<Token> response = this.restTemplate.postForEntity("/auth/login", new UserDTO(UserRole.USER, "SomeUserName", ""), Token.class);
 
         //Check STATUS CODE.
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
