@@ -1,21 +1,26 @@
 package dev.bpeeva.flashcardsapp.app.service.model;
 
+import dev.bpeeva.flashcardsapp.db.constant.UserRole;
 import dev.bpeeva.flashcardsapp.db.model.User;
 import dev.bpeeva.flashcardsapp.db.repo.UserRepository;
 import dev.bpeeva.flashcardsapp.util.dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService {
+
+    private final AuthenticationManager authManager;
+    private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
 
@@ -36,7 +41,7 @@ public class UserService implements UserDetailsService {
      */
     public Optional<User> getUser(UserDTO userDTO) {
 
-        return this.userRepository.findByUsernameAndPassword(userDTO.username(), userDTO.password());
+        return getUser(userDTO.username());
     }
 
     /**
@@ -58,7 +63,11 @@ public class UserService implements UserDetailsService {
         //Check if not null and username not taken.
         if (userDTO.isNotNull() && !this.isUsernameTaken(userDTO.username())) {
             //Create user object.
-            User user = new User(null, userDTO.userRole(), userDTO.username(), userDTO.password(), null);
+            User user = User.builder()
+                    .userRole(UserRole.USER)
+                    .username(userDTO.username())
+                    .password(this.passwordEncoder.encode(userDTO.password()))
+                    .build();
 
             //Save user.
             return Optional.of(this.userRepository.save(user));
@@ -80,17 +89,5 @@ public class UserService implements UserDetailsService {
             //Delete user.
             this.userRepository.delete(user.get());
         }
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //Fetch user.
-        Optional<User> user = this.userRepository.findByUsername(username);
-
-        //Check if empty.
-        if (user.isEmpty())
-            throw new UsernameNotFoundException("Username not found!!!");
-
-        return user.get();
     }
 }
