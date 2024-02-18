@@ -78,9 +78,9 @@ public class FlashcardCollectionCTService {
             return new ArrayList<>();
 
         //Get all collection names.
-        return this.flashcardCollectionService.getFlashcardCollections(user.get()).stream()
+        return new ArrayList<>(this.flashcardCollectionService.getFlashcardCollections(user.get()).stream()
                 .filter(col -> col.getId() != null)
                 .map(FlashcardCollection::getName)
-                .toList();
+                .toList());
     }
 }
