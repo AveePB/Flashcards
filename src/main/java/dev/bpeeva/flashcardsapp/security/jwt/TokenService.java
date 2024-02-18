@@ -1,6 +1,7 @@
 package dev.bpeeva.flashcardsapp.security.jwt;
 
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
@@ -44,7 +45,7 @@ public class TokenService {
 
         //Create json web token.
         return new Token(Jwts.builder()
-                .signWith(key)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .setClaims(extraClaims)
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
