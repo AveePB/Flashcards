@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -120,10 +122,10 @@ public class FlashcardCollectionControllerTests {
     void shouldReturnAllOwnedFlashcardCollections() {
         //Apply request.
         ResponseEntity<String> getResponse = this.restTemplate.getForEntity("/flashcards/Jack", String.class);
-        DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
 
         //Check STATUS CODE.
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
 
         //COUNT collections.
         Number collectionCount = documentContext.read("$.length()");
@@ -133,14 +135,13 @@ public class FlashcardCollectionControllerTests {
     @Test
     void shouldReturn0WhenUserDoesNotExist() {
         //Apply request.
-        ResponseEntity<String> getResponse = this.restTemplate.getForEntity("/flashcards/XDDs", String.class);
-        DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
+        ResponseEntity<List> getResponse = this.restTemplate.getForEntity("/flashcards/XDDs", List.class);
 
         //Check STATUS CODE.
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
 
         //COUNT collections.
-        Number collectionCount = documentContext.read("$.length()");
-        assertThat(collectionCount).isEqualTo(0);
+        assertThat(getResponse.getBody().size()).isEqualTo(0);
     }
 }
