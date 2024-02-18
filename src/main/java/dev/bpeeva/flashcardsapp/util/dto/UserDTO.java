@@ -13,9 +13,6 @@ public record UserDTO(
      * @return the boolean value.
      */
     public boolean isNotNull() {
-        //Check user role.
-        if (this.userRole == null)
-            return false;
 
         //Check username.
         if (this.username == null)
