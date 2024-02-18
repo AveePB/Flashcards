@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +24,8 @@ import java.util.Optional;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
+
+    private final AuthenticationManager authManager;
 
     private final UserService userService;
     private final TokenService tokenService;
@@ -41,15 +46,23 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Token> logIn(@RequestBody UserDTO userDTO) {
-        //Check credentials.
-        Optional<User> user = this.userService.getUser(userDTO);
+
+        try {
+            //Check credentials
+            this.authManager.authenticate(new UsernamePasswordAuthenticationToken(userDTO.username(), userDTO.password()));
+        }
+        catch (AuthenticationException ex) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .build();
+        }
+
+        //Fetch user.
+        Optional<User> user = this.userService.getUser(userDTO.username());
 
         //If operation successful.
-        if (user.isPresent())
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(this.tokenService.generateJWT(user.get(), TokenService.getSigningKey()));
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }
