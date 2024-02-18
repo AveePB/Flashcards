@@ -3,6 +3,7 @@ package dev.bpeeva.flashcardsapp.app.controller;
 import dev.bpeeva.flashcardsapp.app.service.model.UserService;
 import dev.bpeeva.flashcardsapp.db.model.User;
 import dev.bpeeva.flashcardsapp.security.jwt.Token;
+import dev.bpeeva.flashcardsapp.security.jwt.TokenService;
 import dev.bpeeva.flashcardsapp.util.dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class AuthController {
 
     private final UserService userService;
+    private final TokenService tokenService;
 
     @PostMapping("/signup")
     public ResponseEntity<Token> signUp(@RequestBody UserDTO userDTO) {
@@ -30,7 +32,9 @@ public class AuthController {
 
         //If operation successful.
         if (user.isPresent())
-            return ResponseEntity.status(HttpStatus.OK).body(new Token("NO BEARER TOKEN"));
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(this.tokenService.generateJWT(user.get(), TokenService.getSigningKey()));
 
         return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
@@ -42,9 +46,10 @@ public class AuthController {
 
         //If operation successful.
         if (user.isPresent())
-            return ResponseEntity.status(HttpStatus.OK).body(new Token("NO BEARER TOKEN"));
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(this.tokenService.generateJWT(user.get(), TokenService.getSigningKey()));
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-    //PUT VALUE INTO JWT TOKEN CONSTRUCTOR!!!!!
 }
