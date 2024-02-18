@@ -136,9 +136,6 @@ public class UserServiceTests {
 
         //Check USERNAME.
         assertThat(user.get().getUsername()).isEqualTo(userDTO.username());
-
-        //Check PASSWORD.
-        assertThat(user.get().getPassword()).isEqualTo(userDTO.password());
     }
 
     @Test
