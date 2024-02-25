@@ -2,20 +2,25 @@
 
 ## Table of contents
 1. [Introduction](#introduction)
-2. [AUTH Requests:](#auth_requests)
+2. [Auth Requests:](#auth_requests)
    - [Sign up](#sign_up_request)
    - [Log in](#log_in_request)
-3. [FLASHCARD COLLECTION Requests:](#flashcard_collection_requests)
+3. [Flashcard Collection Requests:](#flashcard_collection_requests)
    - [Create flashcard collection](#create_flashcard_collection_request)
    - [Delete flashcard collection](#delete_flashcard_collection_request)
    - [Fetch owned flashcard collections](#fetch_owned_flashcard_collections_request)
+4. [Flashcard Requests:](#flashcard_requests)
+   - [Create flashcard](#create_flashcard_request)
+   - [Delete flashcard](#delete_flashcard_request)
+   - [Fetch random flashcard](#fetch_random_flashcard_request)
+   - [Fetch all flashcards](#fetch_all_flashcards_request)
 
 ## Introduction <a name="introduction"></a>
 Welcome to the "Flashcards" project! This is an application that allows
 users to expand their vocabulary. That project was created to learn
 about the spring boot project design and the JWT security details.
 
-## AUTH Requests <a name="auth_requests"></a>
+## Auth Requests <a name="auth_requests"></a>
 This chapter describes all kinds of authorization requests. This application
 has only two such requests (***sign up*** & ***log in***).
 
@@ -45,7 +50,7 @@ Log in request is used to get the authorization.
 }
 ```
 
-## FLASHCARD COLLECTION Requests <a name="flashcard_collection_requests"></a>
+## Flashcard Collection Requests <a name="flashcard_collection_requests"></a>
 In this chapter we take a look at the flashcard collection requests.
 There are only three of these (***create flashcard collection***, ***delete flashcard collection*** & ***fetch owned flashcard collections***).
 
@@ -84,4 +89,57 @@ flashcard collections.
 
 }
 //BEARER TOKEN: JWT
+```
+
+## Flashcard Requests <a name="flashcard_requests"></a>
+This chapter is used to talk about the flashcard requests. We've got only 
+four of them (***create flashcard***, ***delete flashcard***, ***fetch random flashcard*** & ***fetch all flashcards***).
+
+### Create flashcard <a name="create_flashcard_request"></a>
+Create flashcard request is used to create a new flashcard.
+```
+//URL: http://localhost:8080/flashcards/{username}/{collectionName}/create
+//TYPE: POST
+//BODY:
+{
+   "wordType": "NOUN/VERB/ADJECTIVE/ADVERB",
+   "englishWord": "englishMeaning",
+   "polishWord": "polishMeaning"
+}
+```
+
+### Delete flashcard <a name="delete_flashcard_request"></a>
+Delete flashcard request is used to delete an existing flashcard.
+```
+//URL: http://localhost:8080/flashcards/{username}/{collectionName}/delete
+//TYPE: DELETE
+//BODY:
+{
+   "wordType": "NOUN/VERB/ADJECTIVE/ADVERB",
+   "englishWord": "englishMeaning",
+   "polishWord": "polishMeaning"
+}
+```
+
+### Fetch random flashcard <a name="fetch_random_flashcard_request"></a>
+Fetch random flashcard request is used to get the random flashcard from
+the collection.
+```
+//URL: http://localhost:8080/flashcards/{username}/{collectionName}/random
+//TYPE: GET
+//BODY:
+{
+
+}
+```
+
+### Fetch all flashcards <a name="fetch_all_flashcards_request"></a>
+Fetch all flashcards request is used to get all flashcard from the collection.
+```
+//URL: http://localhost:8080/flashcards/{username}/{collectionName}/all
+//TYPE: GET
+//BODY:
+{
+
+}
 ```
