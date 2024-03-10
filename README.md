@@ -32,4 +32,5 @@ We decided to use the MySQL database because of the GNU General Public License (
 <img src="./png/db-schema.png" alt="database schema">
 
 ## Project Structure <a name="project-structure"></a>
-...
+Folders are divided in clear way to have an easy access to all files in the project. The clearity is key to make it work.
+<img src="./png/folder-structure.png" alt="folder structure">
