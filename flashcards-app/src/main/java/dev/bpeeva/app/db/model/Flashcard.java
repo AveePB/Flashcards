@@ -1,10 +1,7 @@
 package dev.bpeeva.app.db.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import dev.bpeeva.app.db.constant.WordClass;
+import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +19,9 @@ public class Flashcard {
     @Id
     @GeneratedValue
     private Integer id;
+
+    @Enumerated(value = EnumType.STRING)
+    private WordClass wordClass;
 
     private String motherLang;
     private String foreignLang;
