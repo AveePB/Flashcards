@@ -8,6 +8,7 @@ Flashcards repo is an entry level project, that's been created to learn about pr
 4. [JWT Security](#jwt-security)
 5. [Database](#database)
 6. [Project Structure](#project-structure)
+7. [Software Testing](#software-testing)
 
 ## Information <a name="information"></a>
 In complex projects, the designing and architectural skills might prove useful. We use this repo as an opportunity to develop them. Regular practice is key to success. This project can be downloaded, edited and used in any way you want.
@@ -34,3 +35,6 @@ We decided to use the MySQL database because of the GNU General Public License (
 ## Project Structure <a name="project-structure"></a>
 Folders are divided in clear way to have an easy access to all files in the project. The clearity is key to make it work.
 <img src="./png/folder-structure.png" alt="folder structure">
+
+## Software Testing <a name="software-testing"></a>
+...
