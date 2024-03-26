@@ -111,4 +111,22 @@ public class UserRepositoryTests {
         //Assert
         assertThat(user.isPresent()).isFalse();
     }
+
+    @Test
+    void shouldFetchAUserByNickname() {
+        //Act
+        Optional<User> user = userRepo.findByUsername("Alex");
+
+        //Assert
+        assertThat(user.isPresent()).isTrue();
+    }
+
+    @Test
+    void shouldTryToFetchAUserByNickname() {
+        //Act
+        Optional<User> user = userRepo.findByUsername("Zosia");
+
+        //Assert
+        assertThat(user.isPresent()).isFalse();
+    }
 }
