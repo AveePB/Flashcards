@@ -7,6 +7,7 @@ import com.dev.app.db.repo.FlashcardCollectionRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,22 +24,32 @@ public class FlashcardCollectionManager {
     public Optional<FlashcardCollection> createNewFlashcardCollection(String collectionName, User owner) {
         if (collectionName == null || owner == null) return Optional.empty();
 
-        int collectionNameCount = flashcardCollectionRepository.findAllByNameAndOwner(collectionName, owner).size();
-        if (collectionNameCount > 0) return Optional.empty();
+        try {
+            int collectionNameCount = flashcardCollectionRepository.findAllByNameAndOwner(collectionName, owner).size();
+            if (collectionNameCount > 0) return Optional.empty();
 
-        FlashcardCollection flashcardCollection = FlashcardCollection.builder()
-                .name(collectionName)
-                .owner(owner)
-                .build();
+            FlashcardCollection flashcardCollection = FlashcardCollection.builder()
+                    .name(collectionName)
+                    .owner(owner)
+                    .build();
 
-        return Optional.of(flashcardCollectionRepository.save(flashcardCollection));
+            return Optional.of(flashcardCollectionRepository.save(flashcardCollection));
+        }
+        catch (InvalidDataAccessApiUsageException ex) {
+            return Optional.empty();
+        }
     }
 
     public List<FlashcardCollection> getAllFlashcardCollections(User owner) {
         if (owner == null)
             return new ArrayList<>();
 
-        return flashcardCollectionRepository.findAllByOwner(owner);
+        try {
+            return flashcardCollectionRepository.findAllByOwner(owner);
+        }
+        catch (InvalidDataAccessApiUsageException ex) {
+            return new ArrayList<>();
+        }
     }
 
     public Optional<FlashcardCollection> updateFlashcardCollectionName(Integer id, String collectionName) {

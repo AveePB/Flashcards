@@ -15,6 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -69,6 +70,22 @@ public class FlashcardCollectionManagerTests {
     }
 
     @Test
+    void shouldNotCreateANewFlashcardCollectionBecauseOfANonExistingUser() {
+        //Arrange
+        User sebastian = User.builder()
+                .username("Sebastian")
+                .password("SFLH(@$$@")
+                .build();
+
+        //Act
+        Optional<FlashcardCollection> flashcardCollection = flashcardCollectionManager.createNewFlashcardCollection("Dogs", sebastian);
+
+        //Assert
+        assertThat(flashcardCollection.isPresent()).isFalse();
+        assertThat(flashcardCollectionRepository.count()).isEqualTo(1);
+    }
+
+    @Test
     void shouldNotCreateANewFlashcardCollectionBecauseOfNullArgs() {
         //Act
         Optional<FlashcardCollection> flashcardCollection = flashcardCollectionManager.createNewFlashcardCollection(null, john);
@@ -101,6 +118,21 @@ public class FlashcardCollectionManagerTests {
 
         //Assert
         assertThat(collectionList.size()).isEqualTo(0);
+    }
+
+    @Test
+    void shouldFailToFetchCollectionsBecauseOfANonExistingUser() {
+        //Arrange
+        User maks = User.builder()
+                .username("Maks")
+                .password("O*YW$RFSD")
+                .build();
+
+        //Act
+        List<FlashcardCollection> flashcardCollections = flashcardCollectionManager.getAllFlashcardCollections(maks);
+
+        //Assert
+        assertThat(flashcardCollections.size()).isEqualTo(0);
     }
 
     @Test
@@ -147,7 +179,7 @@ public class FlashcardCollectionManagerTests {
     @Test
     void shouldDeleteAFlashcardCollection() {
         //Act
-        boolean isDeleted = flashcardCollectionManager.deleteFlashcardCollection(1);
+        boolean isDeleted = flashcardCollectionManager.deleteFlashcardCollection(books.getId());
 
         //Assert
         assertThat(isDeleted).isTrue();
