@@ -113,4 +113,22 @@ public class FlashcardCollectionRepositoryTests {
         //Assert
         assertThat(flashcardCollectionList.size()).isEqualTo(1);
     }
+
+    @Test
+    void shouldFetchAllCollectionsByNameAndOwner() {
+        //Act
+        List<FlashcardCollection> flashcardCollectionList = collRepo.findAllByNameAndOwner("Jobs", jeremy);
+
+        //Assert
+        assertThat(flashcardCollectionList.size()).isEqualTo(1);
+    }
+
+    @Test
+    void shouldFetch0CollectionsByNameAndOwner() {
+        //Act
+        List<FlashcardCollection> flashcardCollectionList = collRepo.findAllByNameAndOwner("Fruits", jeremy);
+
+        //Assert
+        assertThat(flashcardCollectionList.size()).isEqualTo(0);
+    }
 }

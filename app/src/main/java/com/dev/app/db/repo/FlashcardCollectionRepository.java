@@ -6,10 +6,13 @@ import com.dev.app.db.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
 public interface FlashcardCollectionRepository extends JpaRepository<FlashcardCollection, Integer> {
 
     List<FlashcardCollection> findAllByOwner(User owner);
+
+    List<FlashcardCollection> findAllByNameAndOwner(String collectionName, User owner);
 }
