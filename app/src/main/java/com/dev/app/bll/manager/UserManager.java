@@ -2,7 +2,9 @@ package com.dev.app.bll.manager;
 
 import com.dev.app.db.model.User;
 import com.dev.app.db.repo.UserRepository;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +26,7 @@ public class UserManager implements UserDetailsService {
 
         User newUser = User.builder()
                 .username(username)
-                .password(password) //.password(encoder.encode(password))
+                .password(password)
                 .build();
 
         try {
