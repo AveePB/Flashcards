@@ -1,5 +1,6 @@
-package com.dev.app.util.token;
+package com.dev.app.bll.manager;
 
+import com.dev.app.util.token.JsonWebToken;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

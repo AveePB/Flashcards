@@ -1,4 +1,6 @@
-package com.dev.app.util.token;
+package com.dev.app.bll.manager;
+
+import com.dev.app.util.token.JsonWebToken;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
