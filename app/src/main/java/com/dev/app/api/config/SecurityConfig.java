@@ -15,6 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    public static final String SECRET_KEY_256_BIT = "5ZT7O1kvfLOJo0ixfqXts0j1doPNFzMqeFxnmExPcVhNT6XyQVvSKp11bBA455HG";
+
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
