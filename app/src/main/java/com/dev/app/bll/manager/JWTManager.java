@@ -19,8 +19,6 @@ public class JWTManager {
 
     private final static int TOKEN_LIFESPAN = 3600 * 1000; //ONE HOUR
 
-
-
     private Claims extractAllClaims(String bearer, Key secretKey) {
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
