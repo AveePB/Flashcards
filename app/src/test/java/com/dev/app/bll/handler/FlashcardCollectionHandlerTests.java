@@ -93,4 +93,42 @@ public class FlashcardCollectionHandlerTests {
         }
         throw new Exception("Created a new resource, but shouldn't...");
     }
+
+    @Test
+    void shouldSuccessfullyDeleteAFlashcardCollection() throws Exception {
+        //Arrange
+        FlashcardCollectionDTO flashcardCollectionDTO = new FlashcardCollectionDTO("Animals", "Janusz");
+
+        //Act
+        flashcardCollectionHandler.deleteFlashcardCollection(flashcardCollectionDTO);
+
+        //Assert
+        assertThat(collRepo.count()).isEqualTo(0);
+    }
+
+    @Test
+    void shouldTryToDeleteANonExistingFlashcardCollection() throws Exception {
+        //Arrange
+        FlashcardCollectionDTO flashcardCollectionDTO = new FlashcardCollectionDTO("Tools", "Janusz");
+
+        //Act
+        flashcardCollectionHandler.deleteFlashcardCollection(flashcardCollectionDTO);
+
+        //Assert
+        assertThat(collRepo.count()).isEqualTo(1);
+    }
+
+    @Test
+    void shouldFailToDeleteAFlashcardCollectionBecauseOfANullArg() throws Exception {
+        try {
+            //Act
+            flashcardCollectionHandler.deleteFlashcardCollection(null);
+        }
+        //Assert
+        catch (Exception ex) {
+            return;
+        }
+
+        throw new Exception("Deleted a flashcard collection, but shouldn't...");
+    }
 }

@@ -38,4 +38,17 @@ public class FlashcardCollectionHandler {
                 .buildAndExpand(createdCollection.get().getId())
                 .toUri();
     }
+
+    public void deleteFlashcardCollection(FlashcardCollectionDTO flashcardCollectionDTO) throws Exception {
+        if (flashcardCollectionDTO == null) throw new Exception("Flashcard Collection Data Transfer Object is NULL...");
+
+        UserDetails collectionOwner = userManager.loadUserByUsername(flashcardCollectionDTO.ownerNickname());
+        Optional<FlashcardCollection> flashcardCollection = collectionManager.getAllFlashcardCollections((User) collectionOwner).stream()
+                .findAny()
+                .filter(coll -> coll.getName().equals(flashcardCollectionDTO.collectionName()));
+
+        flashcardCollection.ifPresent(
+                coll -> collectionManager.deleteFlashcardCollection(coll.getId())
+        );
+    }
 }
