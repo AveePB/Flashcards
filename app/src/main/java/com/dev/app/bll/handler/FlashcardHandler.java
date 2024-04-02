@@ -31,18 +31,18 @@ public class FlashcardHandler {
     @Autowired
     private final FlashcardManager flashcardManager;
 
-    public URI createNewFlashcard(FlashcardDTO flashcardDTO) throws Exception {
-        if (flashcardDTO == null) throw new Exception("Flashcard Data Transfer Object is NULL...");
+    public URI createNewFlashcard(FlashcardDTO flashcardDTO) throws HandlerException {
+        if (flashcardDTO == null) throw new HandlerException("Flashcard Data Transfer Object is NULL...");
 
         UserDetails collectionOwner = userManager.loadUserByUsername(flashcardDTO.ownerNickname());
         Optional<FlashcardCollection> flashcardCollection = collManager.getAllFlashcardCollections((User) collectionOwner).stream()
                 .findAny()
                 .filter(coll -> coll.getName().equals(flashcardDTO.collectionName()));
 
-        if (flashcardCollection.isEmpty()) throw new Exception("Flashcard Collection doesn't exit...");
+        if (flashcardCollection.isEmpty()) throw new HandlerException("Flashcard Collection doesn't exit...");
 
         Optional<Flashcard> createdFlashcard = flashcardManager.createNewFlashcard(flashcardDTO.motherLang(), flashcardDTO.foreignLang(), flashcardCollection.get());
-        if (createdFlashcard.isEmpty()) throw new Exception("Flashcard wasn't created...");
+        if (createdFlashcard.isEmpty()) throw new HandlerException("Flashcard wasn't created...");
 
         return UriComponentsBuilder.newInstance()
                 .path("flashcards/" + flashcardDTO.ownerNickname() + "/" + flashcardDTO.collectionName() + "/{id}")
@@ -50,15 +50,15 @@ public class FlashcardHandler {
                 .toUri();
     }
 
-    public void deleteFlashcard(FlashcardDTO flashcardDTO) throws Exception {
-        if (flashcardDTO == null) throw new Exception("Flashcard Data Transfer Object is NULL...");
+    public void deleteFlashcard(FlashcardDTO flashcardDTO) throws HandlerException {
+        if (flashcardDTO == null) throw new HandlerException("Flashcard Data Transfer Object is NULL...");
 
         UserDetails collectionOwner = userManager.loadUserByUsername(flashcardDTO.ownerNickname());
         Optional<FlashcardCollection> flashcardCollection = collManager.getAllFlashcardCollections((User) collectionOwner).stream()
                 .findAny()
                 .filter(coll -> coll.getName().equals(flashcardDTO.collectionName()));
 
-        if (flashcardCollection.isEmpty()) throw new Exception("Flashcard Collection doesn't exit...");
+        if (flashcardCollection.isEmpty()) throw new HandlerException("Flashcard Collection doesn't exit...");
 
         Optional<Flashcard> flashcardToDelete = flashcardManager.getAllFlashcards(flashcardCollection.get()).stream()
                 .findFirst()
@@ -71,15 +71,15 @@ public class FlashcardHandler {
         );
     }
 
-    public Optional<FlashcardDTO> getRandomFlashcard(FlashcardCollectionDTO flashcardCollectionDTO) throws Exception {
-        if (flashcardCollectionDTO == null) throw new Exception("Flashcard Data Transfer Object is NULL...");
+    public Optional<FlashcardDTO> getRandomFlashcard(FlashcardCollectionDTO flashcardCollectionDTO) throws HandlerException {
+        if (flashcardCollectionDTO == null) throw new HandlerException("Flashcard Data Transfer Object is NULL...");
 
         UserDetails collectionOwner = userManager.loadUserByUsername(flashcardCollectionDTO.ownerNickname());
         Optional<FlashcardCollection> flashcardCollection = collManager.getAllFlashcardCollections((User) collectionOwner).stream()
                 .findAny()
                 .filter(coll -> coll.getName().equals(flashcardCollectionDTO.collectionName()));
 
-        if (flashcardCollection.isEmpty()) throw new Exception("Flashcard Collection doesn't exit...");
+        if (flashcardCollection.isEmpty()) throw new HandlerException("Flashcard Collection doesn't exit...");
 
         Optional<Flashcard> randomFlashcard = flashcardManager.getRandomFlashcard(flashcardCollection.get());
         if (randomFlashcard.isEmpty()) return Optional.empty();

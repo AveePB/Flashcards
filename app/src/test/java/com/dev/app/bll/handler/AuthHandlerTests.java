@@ -66,7 +66,7 @@ public class AuthHandlerTests {
             JsonWebToken jwt = authHandler.logIn(null);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
 
@@ -89,7 +89,7 @@ public class AuthHandlerTests {
             JsonWebToken jwt = authHandler.signUp(new UserDTO("Sebastian", "FNHW$&*T%"));
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
 
@@ -103,7 +103,7 @@ public class AuthHandlerTests {
             JsonWebToken jwt = authHandler.signUp(null);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
 

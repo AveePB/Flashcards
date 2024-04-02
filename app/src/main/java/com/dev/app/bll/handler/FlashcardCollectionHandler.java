@@ -25,13 +25,13 @@ public class FlashcardCollectionHandler {
     @Autowired
     private final FlashcardCollectionManager collectionManager;
 
-    public URI createNewFlashcardCollection(FlashcardCollectionDTO flashcardCollectionDTO) throws Exception {
-        if (flashcardCollectionDTO == null) throw new Exception("Flashcard Collection Data Transfer Object is NULL...");
+    public URI createNewFlashcardCollection(FlashcardCollectionDTO flashcardCollectionDTO) throws HandlerException {
+        if (flashcardCollectionDTO == null) throw new HandlerException("Flashcard Collection Data Transfer Object is NULL...");
 
         UserDetails collectionOwner = userManager.loadUserByUsername(flashcardCollectionDTO.ownerNickname());
 
         Optional<FlashcardCollection> createdCollection = collectionManager.createNewFlashcardCollection(flashcardCollectionDTO.collectionName(), (User) collectionOwner);
-        if (createdCollection.isEmpty()) throw new Exception("Flashcard Collection wasn't created...");
+        if (createdCollection.isEmpty()) throw new HandlerException("Flashcard Collection wasn't created...");
 
         return UriComponentsBuilder.newInstance()
                 .path("flashcards/" + flashcardCollectionDTO.ownerNickname() + "/{id}")
@@ -39,8 +39,8 @@ public class FlashcardCollectionHandler {
                 .toUri();
     }
 
-    public void deleteFlashcardCollection(FlashcardCollectionDTO flashcardCollectionDTO) throws Exception {
-        if (flashcardCollectionDTO == null) throw new Exception("Flashcard Collection Data Transfer Object is NULL...");
+    public void deleteFlashcardCollection(FlashcardCollectionDTO flashcardCollectionDTO) throws HandlerException {
+        if (flashcardCollectionDTO == null) throw new HandlerException("Flashcard Collection Data Transfer Object is NULL...");
 
         UserDetails collectionOwner = userManager.loadUserByUsername(flashcardCollectionDTO.ownerNickname());
         Optional<FlashcardCollection> flashcardCollection = collectionManager.getAllFlashcardCollections((User) collectionOwner).stream()

@@ -68,7 +68,7 @@ public class FlashcardHandlerTests {
             URI uri = flashcardHandler.createNewFlashcard(flashcardDTO);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
 
@@ -85,7 +85,7 @@ public class FlashcardHandlerTests {
             URI uri = flashcardHandler.createNewFlashcard(flashcardDTO);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
 
@@ -99,7 +99,7 @@ public class FlashcardHandlerTests {
             URI uri = flashcardHandler.createNewFlashcard(null);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
 
@@ -141,7 +141,7 @@ public class FlashcardHandlerTests {
             flashcardHandler.deleteFlashcard(flashcardDTO);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
         throw new Exception("Deleted a flashcard, but shouldn't...");
@@ -157,7 +157,7 @@ public class FlashcardHandlerTests {
             flashcardHandler.deleteFlashcard(flashcardDTO);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
         throw new Exception("Deleted a flashcard, but shouldn't...");
@@ -170,7 +170,7 @@ public class FlashcardHandlerTests {
             flashcardHandler.deleteFlashcard(null);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
         throw new Exception("Deleted a flashcard, but shouldn't...");
@@ -211,7 +211,7 @@ public class FlashcardHandlerTests {
             Optional<FlashcardDTO> randomFlashcard = flashcardHandler.getRandomFlashcard(flashcardCollectionDTO);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
 
@@ -228,7 +228,7 @@ public class FlashcardHandlerTests {
             Optional<FlashcardDTO> randomFlashcard = flashcardHandler.getRandomFlashcard(flashcardCollectionDTO);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
 
@@ -242,7 +242,7 @@ public class FlashcardHandlerTests {
             Optional<FlashcardDTO> randomFlashcard = flashcardHandler.getRandomFlashcard(null);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
 

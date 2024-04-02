@@ -31,24 +31,24 @@ public class AuthHandler {
     @Autowired
     private final JWTManager jwtManager;
 
-    public JsonWebToken logIn(UserDTO userDTO) throws Exception {
-        if (userDTO == null) throw new Exception("User Data Transfer Object is NULL...");
+    public JsonWebToken logIn(UserDTO userDTO) throws HandlerException {
+        if (userDTO == null) throw new HandlerException("User Data Transfer Object is NULL...");
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDTO.username(), userDTO.password()));
 
         Optional<JsonWebToken> jwt = jwtManager.generateJWT(userDTO.username(), SecurityConfig.SECRET_KEY_256_BIT);
-        if (jwt.isEmpty()) throw new Exception("JWT hasn't been properly generated...");
+        if (jwt.isEmpty()) throw new HandlerException("JWT hasn't been properly generated...");
 
         return jwt.get();
     }
 
-    public JsonWebToken signUp(UserDTO userDTO) throws Exception {
-        if (userDTO == null) throw new Exception("User Data Transfer Object is NULL...");
+    public JsonWebToken signUp(UserDTO userDTO) throws HandlerException {
+        if (userDTO == null) throw new HandlerException("User Data Transfer Object is NULL...");
 
         Optional<User> createdUser = userManager.createNewUser(userDTO.username(), passwordEncoder.encode(userDTO.password()));
-        if (createdUser.isEmpty()) throw new Exception("Cannot create a user...");
+        if (createdUser.isEmpty()) throw new HandlerException("Cannot create a user...");
 
         Optional<JsonWebToken> jwt = jwtManager.generateJWT(userDTO.username(), SecurityConfig.SECRET_KEY_256_BIT);
-        if (jwt.isEmpty()) throw new Exception("JWT hasn't been properly generated...");
+        if (jwt.isEmpty()) throw new HandlerException("JWT hasn't been properly generated...");
 
         return jwt.get();
     }

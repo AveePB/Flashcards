@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.net.URI;
@@ -59,7 +60,7 @@ public class FlashcardCollectionHandlerTests {
             URI uri = flashcardCollectionHandler.createNewFlashcardCollection(flashcardCollectionDTO);
         }
         //Assert
-        catch (Exception ex) {
+        catch (UsernameNotFoundException ex) {
             return;
         }
         throw new Exception("Created a new resource, but shouldn't...");
@@ -75,7 +76,7 @@ public class FlashcardCollectionHandlerTests {
             URI uri = flashcardCollectionHandler.createNewFlashcardCollection(flashcardCollectionDTO);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
         throw new Exception("Created a new resource, but shouldn't...");
@@ -88,7 +89,7 @@ public class FlashcardCollectionHandlerTests {
             URI uri = flashcardCollectionHandler.createNewFlashcardCollection(null);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
         throw new Exception("Created a new resource, but shouldn't...");
@@ -125,7 +126,7 @@ public class FlashcardCollectionHandlerTests {
             flashcardCollectionHandler.deleteFlashcardCollection(null);
         }
         //Assert
-        catch (Exception ex) {
+        catch (HandlerException ex) {
             return;
         }
 
