@@ -27,14 +27,24 @@ public class JWTManager {
                 .getBody();
     }
 
+    private Optional<Date> extractExpiration(JsonWebToken jwt, Key secretKey) {
+        Claims claims = extractAllClaims(jwt.bearer(), secretKey);
+        return Optional.of(claims.getExpiration());
+    }
+
     private Optional<String> extractUsername(JsonWebToken jwt, Key secretKey) {
         Claims claims = extractAllClaims(jwt.bearer(), secretKey);
         return Optional.of(claims.getSubject());
     }
 
-    private Optional<Date> extractExpiration(JsonWebToken jwt, Key secretKey) {
-        Claims claims = extractAllClaims(jwt.bearer(), secretKey);
-        return Optional.of(claims.getExpiration());
+    public Optional<String> extractUsername(JsonWebToken jwt, String secretKey) {
+        if (jwt == null || secretKey == null) return Optional.empty();
+
+        byte[] secretKeyInBytes = Decoders.BASE64.decode(secretKey);
+        Key hashedKey = Keys.hmacShaKeyFor(secretKeyInBytes);
+
+        Claims claims = extractAllClaims(jwt.bearer(), hashedKey);
+        return Optional.of(claims.getSubject());
     }
 
     public boolean validate(JsonWebToken jwt, String secretKey, String username) {
