@@ -33,8 +33,6 @@ public class AuthControllerTests {
 
     @Autowired
     private final UserRepository userRepo = null;
-    @Autowired
-    private final JWTManager jwtManager = null;
 
     @BeforeEach
     void setUpDB() {

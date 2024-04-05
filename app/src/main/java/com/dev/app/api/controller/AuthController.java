@@ -19,28 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class AuthController {
 
-    @Autowired
     private final AuthHandler authHandler;
 
     @PostMapping("/log-in")
-    private ResponseEntity<JsonWebToken> logIn(@RequestBody UserDTO userDTO) {
-        try {
-            JsonWebToken jwt = authHandler.logIn(userDTO);
-            return ResponseEntity.ok(jwt);
-        }
-        catch (HandlerException ex) {
-            return ResponseEntity.status(403).build();
-        }
+    private ResponseEntity<JsonWebToken> logIn(@RequestBody UserDTO userDTO) throws HandlerException {
+        JsonWebToken jwt = authHandler.logIn(userDTO);
+        return ResponseEntity.ok(jwt);
     }
 
     @PostMapping("/sign-up")
-    private ResponseEntity<JsonWebToken> signUp(@RequestBody UserDTO userDTO) {
-        try {
-            JsonWebToken jwt = authHandler.signUp(userDTO);
-            return ResponseEntity.ok(jwt);
-        }
-        catch (HandlerException ex) {
-            return ResponseEntity.status(403).build();
-        }
+    private ResponseEntity<JsonWebToken> signUp(@RequestBody UserDTO userDTO) throws HandlerException {
+        JsonWebToken jwt = authHandler.signUp(userDTO);
+        return ResponseEntity.ok(jwt);
     }
 }
