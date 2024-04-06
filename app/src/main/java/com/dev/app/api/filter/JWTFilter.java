@@ -29,14 +29,13 @@ public class JWTFilter extends OncePerRequestFilter {
     private static final String AUTHORIZATION = "Authorization";
     private static final String PREFIX = "Bearer ";
 
-
     private final UserManager userManager;
     private final JWTManager jwtManager;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(AUTHORIZATION);
-        System.out.println("GOES THROUGH FILTER");
+
         if (authHeader != null && authHeader.startsWith(PREFIX)) {
             String bearer = authHeader.substring(PREFIX.length());
             JsonWebToken jwt = new JsonWebToken(bearer);
