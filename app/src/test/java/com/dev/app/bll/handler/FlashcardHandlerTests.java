@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.net.URI;
@@ -85,7 +86,7 @@ public class FlashcardHandlerTests {
             URI uri = flashcardHandler.createNewFlashcard(flashcardDTO);
         }
         //Assert
-        catch (HandlerException ex) {
+        catch (UsernameNotFoundException ex) {
             return;
         }
 
@@ -141,7 +142,7 @@ public class FlashcardHandlerTests {
             flashcardHandler.deleteFlashcard(flashcardDTO);
         }
         //Assert
-        catch (HandlerException ex) {
+        catch (UsernameNotFoundException ex) {
             return;
         }
         throw new Exception("Deleted a flashcard, but shouldn't...");
@@ -211,7 +212,7 @@ public class FlashcardHandlerTests {
             Optional<FlashcardDTO> randomFlashcard = flashcardHandler.getRandomFlashcard(flashcardCollectionDTO);
         }
         //Assert
-        catch (HandlerException ex) {
+        catch (UsernameNotFoundException ex) {
             return;
         }
 

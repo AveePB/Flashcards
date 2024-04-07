@@ -75,11 +75,16 @@ public class FlashcardHandler {
         if (flashcardCollectionDTO == null) throw new HandlerException("Flashcard Data Transfer Object is NULL...");
 
         UserDetails collectionOwner = userManager.loadUserByUsername(flashcardCollectionDTO.ownerNickname());
-        Optional<FlashcardCollection> flashcardCollection = collManager.getAllFlashcardCollections((User) collectionOwner).stream()
-                .findAny()
-                .filter(coll -> coll.getName().equals(flashcardCollectionDTO.collectionName()));
+        Optional<FlashcardCollection> flashcardCollection = Optional.empty();
 
-        if (flashcardCollection.isEmpty()) throw new HandlerException("Flashcard Collection doesn't exit...");
+        for (FlashcardCollection coll: collManager.getAllFlashcardCollections((User) collectionOwner)) {
+            if (coll.getName().equals(flashcardCollectionDTO.collectionName())) {
+                flashcardCollection = Optional.of(coll);
+                break;
+            }
+        }
+
+        if (flashcardCollection.isEmpty()) throw new HandlerException("Flashcard Collection doesn't exist...");
 
         Optional<Flashcard> randomFlashcard = flashcardManager.getRandomFlashcard(flashcardCollection.get());
         if (randomFlashcard.isEmpty()) return Optional.empty();
