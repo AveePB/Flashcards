@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FlashcardCollectionControllerTests {
 
     private static final String AUTHORIZATION = "Authorization";
-    private static final String FLASHCARDS_URL = "/flashcards";
+    private static final String COLLECTIONS_URL = "/collections";
 
     @Autowired
     private TestRestTemplate restTemplate = null;
@@ -73,7 +73,7 @@ public class FlashcardCollectionControllerTests {
         requestHeaders.put(AUTHORIZATION, List.of(jwtInStringForm));
 
         URI requestURL = UriComponentsBuilder.newInstance()
-                .path(FLASHCARDS_URL)
+                .path(COLLECTIONS_URL)
                 .build()
                 .toUri();
 
@@ -94,7 +94,7 @@ public class FlashcardCollectionControllerTests {
         FlashcardCollectionDTO requestBody = new FlashcardCollectionDTO("Fruits", "Henry");
 
         //Act
-        ResponseEntity<URI> response = restTemplate.postForEntity(FLASHCARDS_URL, requestBody, URI.class);
+        ResponseEntity<URI> response = restTemplate.postForEntity(COLLECTIONS_URL, requestBody, URI.class);
 
         //Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
@@ -109,7 +109,7 @@ public class FlashcardCollectionControllerTests {
         requestHeaders.put(AUTHORIZATION, List.of(jwtInStringForm));
 
         URI requestURL = UriComponentsBuilder.newInstance()
-                .path(FLASHCARDS_URL)
+                .path(COLLECTIONS_URL)
                 .build()
                 .toUri();
 
@@ -131,7 +131,7 @@ public class FlashcardCollectionControllerTests {
         requestHeaders.put(AUTHORIZATION, List.of(jwtInStringForm));
 
         URI requestURL = UriComponentsBuilder.newInstance()
-                .path(FLASHCARDS_URL)
+                .path(COLLECTIONS_URL)
                 .build()
                 .toUri();
 
@@ -153,7 +153,7 @@ public class FlashcardCollectionControllerTests {
         requestHeaders.put(AUTHORIZATION, List.of(jwtInStringForm));
 
         URI requestURL = UriComponentsBuilder.newInstance()
-                .path(FLASHCARDS_URL)
+                .path(COLLECTIONS_URL)
                 .build()
                 .toUri();
 
@@ -172,7 +172,7 @@ public class FlashcardCollectionControllerTests {
         FlashcardCollectionDTO requestBody = new FlashcardCollectionDTO("Colors", "Henry");
 
         URI requestURL = UriComponentsBuilder.newInstance()
-                .path(FLASHCARDS_URL)
+                .path(COLLECTIONS_URL)
                 .build()
                 .toUri();
 
@@ -194,7 +194,7 @@ public class FlashcardCollectionControllerTests {
         requestHeaders.put(AUTHORIZATION, List.of(jwtInStringForm));
 
         URI requestURL = UriComponentsBuilder.newInstance()
-                .path(FLASHCARDS_URL)
+                .path(COLLECTIONS_URL)
                 .build()
                 .toUri();
 

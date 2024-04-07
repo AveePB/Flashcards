@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @Controller
-@RequestMapping("/flashcards")
+@RequestMapping("/collections")
 @RequiredArgsConstructor
 public class FlashcardCollectionController {
 
