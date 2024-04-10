@@ -5,7 +5,6 @@ Flashcards repo is an entry level project, that's been created to learn about pr
 1. [Information](#information)
 2. [Requirements](#requirements)
 3. [JWT Security](#jwt-security)
-
 4. [Project Layers](#project-layers)
     - [Application Layer](#application-layer)
     - [Business Layer](#business-layer)
